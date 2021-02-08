@@ -8,24 +8,39 @@ from numpy import ndarray
 import math
 
 
-def f1(x: ndarray, a: ndarray = 1000, result=0):
+def f1(x: ndarray, a: ndarray = 1000):
+    fv = 0
     for i in range(x.shape[0]):
-        result += np.multiply(x[i]**2, a**(i / (x.shape[0]-1)))
+        fv += x[i]**2 * a**(i / (x.shape[0]-1))
 
-    return result
+    grad = 0
+    for i in range(x.shape[0]):
+        grad += 2 * x[i] * a ** (i / (x.shape[0] - 1))
+
+    hess = 0
+    for i in range(x.shape[0]):
+        hess += 2 * a ** (i / (x.shape[0] - 1))
+
+    return fv, grad, hess
 
 
 def f2(x: ndarray):
     if x.shape[0] != 2:
         print("Fail, x must be two-dimensional")
     else:
-        result = (1-x[0])**2 + 100*(x[1]-x[0]**2)**2
-    return result
+        fv = (1-x[0])**2 + 100*(x[1]-x[0]**2)**2
+        grad = np.array([-2*(1-x[0])-400*x[0]*(x[1]-x[0]**2), 200*(x[1]-x[0]**2)])
+        hess = np.array([[-400*(x[1]-x[0])+800*x[0]**2+2, -400*x[0]], [-400*x[0], 200]])
+
+    return fv, grad, hess
 
 
 def f3(x: ndarray, epsilon=10**(-16)):
 
-    return np.log(epsilon+f1(x))
+    fv = np.log(epsilon+f1(x)[0])
+    grad = f1(x)[1]/(epsilon+f1(x)[0])
+
+    return fv, grad
 
 
 def fh(x, q=10**8):

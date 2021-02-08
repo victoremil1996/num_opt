@@ -14,5 +14,9 @@ def f1(x: ndarray, a: ndarray = 1000, result=0):
     return result
 
 
-def f2(x):
-    return x
+def f2(x: ndarray):
+    if x.shape[0] != 2:
+        print("Fail, x must be two-dimensional")
+    else:
+        result = (1-x[0])**2 + 100*(x[1]-x[0]**2)**2
+    return result

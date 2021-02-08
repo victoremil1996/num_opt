@@ -29,5 +29,16 @@ def f3(x: ndarray, epsilon=10**(-16)):
 
 
 def fh(x, q=10**8):
+    return (math.log(1+math.exp(-abs(q*x)))+max(q*x, 0)) / q
 
-    return math.log(1+math.exp(q*x)) / q
+
+def f4(x: ndarray, q=10**8, result=0):
+    for i in range(x.shape[0]):
+        result += fh(x[i])+100*fh(-x[i])
+    return result
+
+
+def f5(x: ndarray, q=10**8, result=0):
+    for i in range(x.shape[0]):
+        result += fh(x[i])**2+100*fh(-x[i])**2
+    return result

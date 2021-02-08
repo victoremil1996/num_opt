@@ -25,11 +25,11 @@ def f2(x: ndarray):
 
 def f3(x: ndarray, epsilon=10**(-16)):
 
-    return math.log(epsilon+f1(x))
+    return np.log(epsilon+f1(x))
 
 
 def fh(x, q=10**8):
-    return (math.log(1+math.exp(-abs(q*x)))+max(q*x, 0)) / q
+    return (np.log(1+np.exp(-abs(q*x)))+max(q*x, 0)) / q
 
 
 def f4(x: ndarray, q=10**8, result=0):

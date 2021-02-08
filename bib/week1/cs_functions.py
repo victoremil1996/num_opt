@@ -10,3 +10,7 @@ from numpy import ndarray
 def HelloWorld():
     print("Hello World")
 
+def f1(x,d):
+    return x+d
+
+f1(1,10)

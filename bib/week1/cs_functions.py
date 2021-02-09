@@ -23,9 +23,9 @@ def f2(x: ndarray):
     return result
 
 
-def f3(x: ndarray, epsilon=10**(-16)):
+def f3(x: ndarray, epsilon=10**(-16), a: ndarray = 2):
 
-    return np.log(epsilon+f1(x))
+    return np.log(epsilon+f1(x, a))
 
 
 def fh(x, q=10**8):

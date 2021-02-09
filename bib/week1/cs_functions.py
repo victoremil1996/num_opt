@@ -35,10 +35,10 @@ def f2(x: ndarray):
     return fv, grad, hess
 
 
-def f3(x: ndarray, epsilon=10**(-16)):
+def f3(x: ndarray, epsilon=10**(-16), a=2):
 
-    fv = np.log(epsilon+f1(x)[0])
-    grad = f1(x)[1]/(epsilon+f1(x)[0])
+    fv = np.log(epsilon+f1(x, a)[0])
+    grad = f1(x, a)[1]/(epsilon+f1(x, a)[0])
 
     return fv, grad
 

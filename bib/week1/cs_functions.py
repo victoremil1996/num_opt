@@ -43,8 +43,8 @@ def f3(x: ndarray, epsilon=10**(-16), a=2):
     return fv, grad
 
 
-def fh(x, q=10**8):
-    return (np.log(1+np.exp(-abs(q*x)))+max(q*x, 0)) / q
+def fh(x: ndarray, q=10**8):
+    return (np.log(1+np.exp(-np.abs(q*x)))+np.maximum(q*x, 0)) / q
 
 
 def f4(x: ndarray, q=10**8, result=0):

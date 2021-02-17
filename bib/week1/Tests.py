@@ -28,9 +28,19 @@ def f2ToTest(x: ndarray):
     return fv
 
 
-x0 = np.array([0.2, 0.4])
-res = minimize(f1ToTest, x0, method='nelder-mead',options={'xatol': 1e-8, 'disp': True})
+def f3ToTest(x: ndarray, eps=10**(-16), a: ndarray = 2):
+    fv = np.log(eps+f1(x, a)[0])
+    return fv
 
-f1ToTest(x0)
-f1(np.array([0,0]))
+x0 = np.array([7, 3])
+history = [np.linalg.norm(f1(x0)[1])]
+def callback(x):
+    fobj = np.linalg.norm(f1(x)[1])
+    history.append(fobj)
 
+result = minimize(f1ToTest, x0, method='BFGS', tol=1e-8, callback=callback)
+print(history)
+
+plt.plot(np.log10(history))
+np.log(history)
+result = minimize(f4, x0, method='BFGS', tol=1e-8)

@@ -80,12 +80,70 @@ class F3:
     Class that computes function value, gradient and hessian for F3
     """
 
-    def __init__(self, x: ndarray, eps=10**(-16), a: ndarray = 2):
+    def __init__(self, x: ndarray, eps=10**(-16), a: ndarray = 1000):
         self.x = x
         self.eps = eps
         self.a = a
+        self.funk1 = F1(x=x, a=a)
 
     def fv(self):
+        fv = np.log(self.eps + self.funk1.fv())
+        return fv
+
+    def grad(self):
+        grad = self.funk1.grad() / (self.eps + self.funk1.fv())
+        return grad
+
+    def hess(self):
+        hess = (np.matrix(self.funk1.hess())*(self.eps+self.funk1.fv())
+                - np.dot(np.matrix(self.funk1.grad()).T,
+                         np.matrix(self.funk1.grad())))/(self.eps + self.funk1.fv())**2
+        return hess
+
+
+class H:
+    """
+    Class that computes function value, gradient and hessian for F3
+    """
+
+    def __init__(self, x: ndarray, q=10**8):
+        self.x = x
+        self.q = q
+
+    def fv(self):
+        fv = (np.log(1+np.exp(-np.abs(self.q*self.x))) + np.maximum(self.q*self.x, 0)) / self.q
+        return fv
+
+    def gradm(self):
+        if self.x >= 0:
+            return -(np.exp(-self.q * self.x) / (1 + np.exp(-self.q * self.x)))
+        else:
+            return -(1 / (1 + np.exp(self.q * self.x)))
+
+    def gradhp(self):
+        if self.x >= 0:
+            return 1 / (1 + np.exp(-self.q * self.x))
+        else:
+            return np.exp(self.q * self.x) / (1 + np.exp(self.q * self.x))
+
+    def hess(self):
+        hess = np.matmul(np.matrix(self.q*np.exp(-self.q*self.x)),
+                         np.linalg.inv(np.matmul(np.matrix(np.exp(-self.q*self.x)+1), np.matrix(np.exp(-self.q*self.x)+1).T)))
+        return hess
+
+
+class F4():
+    """
+     Class that computes function value, gradient and hessian for F4
+     """
+    def __init__(self, x: ndarray, q=10 ** 8):
+        self.x = x
+        self.q = q
+
+    def fv(self):
+        grad = []
+        for i in range(self.x.shape[0]):
+            grad.append(gradhp())
 
 
 def f1(x: ndarray, a: ndarray = 1000):

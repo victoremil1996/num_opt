@@ -143,8 +143,8 @@ class F4():
     def fv(self):
         grad = []
         for i in range(self.x.shape[0]):
-            grad.append(gradhp())
-
+            grad.append("")
+        return print("Vi skal indhente gradhp og gradhm på en smart måde, hvor den kan indtage x[i]")
 
 def f1(x: ndarray, a: ndarray = 1000):
     fv = 0

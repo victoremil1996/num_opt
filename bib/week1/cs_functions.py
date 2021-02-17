@@ -37,8 +37,9 @@ def f2(x: ndarray):
 
 def f3(x: ndarray, eps=10**(-16), a: ndarray = 2):
     fv = np.log(eps+f1(x, a)[0])
-    grad = f1(x, a)[1]/(eps+f1(x, a)[0])
-    hess = (f1(x, a)[2]*(eps+f1(x, a)[0])-np.multiply(f1(x, a)[1], f1(x, a)[1]))/(f1[x,a]**2+eps)
+    grad = np.array(f1(x, a)[1])/(eps+f1(x, a)[0])
+    hess = (np.multiply(f1(x, a)[2], (eps+f1(x, a)[0]))-np.dot(np.transpose(np.matrix(f1(np.array(x),a)[1])), np.matrix(f1(np.array(x), a)[1])))\
+           / (f1(x, a)[0]**2+eps)
     return fv, grad, hess
 
 

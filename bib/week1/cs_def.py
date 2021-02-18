@@ -16,7 +16,7 @@ def fv1(x: ndarray, a: ndarray = np.array([1000])):
     return fv
 
 
-def grad1(x: ndarray, a: ndarray = np.array([1000])):
+def grad1(x: ndarray, a: ndarray = 1000):
         grad = []
         for i in range(x.shape[0]):
             grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
@@ -28,7 +28,6 @@ def hess1(x: ndarray, a: ndarray = np.array([1000])):
     for i in range(x.shape[0]):
         hess.append(2 * a ** (i / (x.shape[0] - 1)))
     return np.diagflat(np.diag(np.full((x.shape[0], x.shape[0]), hess)))
-
 
 
 def fv2(x: ndarray):

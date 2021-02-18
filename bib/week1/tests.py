@@ -10,51 +10,35 @@ from mpl_toolkits import mplot3d
 import numpy as np
 from numpy import ndarray
 from numpy import *
-from bib.week1.cs_functions import *
+#from bib.week1.cs_functions import *
+from bib.week1.cs_def import *
 
-
-def f1ToTest(x: ndarray, a: ndarray = 1000):
-    fv = 0
-    for i in range(x.shape[0]):
-        fv += x[i]**2 * a**(i / (x.shape[0]-1))
-    return fv
-
-
-def f2ToTest(x: ndarray):
-    fv = 0
-    if x.shape[0] != 2:
-        print("Fail, x must be two-dimensional")
-    else:
-        fv = (1-x[0])**2 + 100*(x[1]-x[0]**2)**2
-    return fv
-
-
-def f3ToTest(x: ndarray, eps=10**(-16), a: ndarray = 2):
-    fv = np.log(eps+f1(x, a)[0])
-    return fv
-
-
-def f1Grad(x: ndarray, a: ndarray = 1000):
-    grad = []
-    for i in range(x.shape[0]):
-        grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
-    return grad
-
-
-x0 = np.array([7, 3])
-history = [np.linalg.norm(f1(x0)[1])]
 def callback(x):
-    fobj = np.linalg.norm(f1(x)[1])
+    fobj = np.linalg.norm(grad1(x))
     history.append(fobj)
 
 
-result = minimize(f2ToTest, x0, method='BFGS', tol=10**(-8), callback=callback)
+x0 = np.array(random.randint(-100, 100, size=50))
+history = [np.linalg.norm(grad1(x0))]
 
-result_opt = minimize(f1ToTest, x0, method='BFGS', tol=10**(-8), callback=callback, options={'disp': True}, jac=f1Grad)
-print(history)
-result.x
-plt.plot((np.log(history)))
+#BFGS
+result_BFGS = minimize(fv1, x0, method='BFGS', tol=10**(-8), callback=callback, jac=grad1)
+#Newton-CG
+result_NM = minimize(fv1, x0, method='Newton-CG', tol=10**(-8), callback=callback,
+                     jac=grad1, hess=hess1)
+#Trust-NCG
+result_TNCG = minimize(fv1, x0, method='trust-ncg', tol=10**(-8), callback=callback,
+                       jac=grad1, hess=hess1)
+#plt.plot((np.log(history)))
+plt.semilogy(history)
+plt.legend(['BFGS', 'Newton-CG', 'trust-ncg'])
+plt.title('Optimization Algorithms with d=50')
+plt.ylabel('log$||f||_1$')
+plt.xlabel('Iterations')
 
-
+fv1(result_BFGS.x)
+result_BFGS.x
+result_NM.x
+result_TNCG.x
 np.log(history)
 result = minimize(f4, x0, method='BFGS', tol=1e-8)

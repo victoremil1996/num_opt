@@ -101,10 +101,40 @@ def gradhp(x: ndarray, q=10**8):
         return np.exp(q * x) / (1 + np.exp(q * x))
 
 
-def hessh(x: ndarray, q=10**8): # FORKERT
-    hess = np.matmul(np.matrix(q*np.exp(-q*x)),
-                     np.linalg.inv(np.matmul(np.matrix(np.exp(-q*x)+1), np.matrix(np.exp(-q*x)+1).T)))
+def hessh(x: ndarray, q=10**8):
+    if x>= 0:
+        return (q*np.exp(-q*x))/((1+np.exp(-q*x))**2)
+    else:
+        (q * np.exp(q * x)) / ((1 + np.exp(q * x)) ** 2)
+
+
+def hess4(x: ndarray, q=10**8):
+    hess = np.zeros((len(x), len(x)))
+    for i in range(len(x)):
+        for j in range(len(x)):
+            if i!= j:
+                hess[i, j] = 0
+            else:
+                hess[i, j] = hessh(x, q)**2 + 100 * gradhm(x[i], q)**2
+
+
+def hess5(x: ndarray, q=10**8):
+    hess = np.zeros((len(x), len(x)))
+    for i in range(len(x)):
+        for j in range(len(x)):
+            if i != j:
+                hess[i, j] = 0
+            else:
+                hess[i, j] = 2 * gradhp(x[i], q)**2 + 2*fvh(x[i], q) * hessh(x[i], q)
+                + 200 * gradhm(x[i], q)**2 + 200 * fvh(-x[i], q) * hessh(x[i], q)
     return hess
+
+
+
+#def hessh1(x: ndarray, q=10**8): # FORKERT
+#   hess = np.matmul(np.matrix(q*np.exp(-q*x)),
+#                    np.linalg.inv(np.matmul(np.matrix(np.exp(-q*x)+1), np.matrix(np.exp(-q*x)+1).T)))
+#    return hess
 
 
 #def fv():

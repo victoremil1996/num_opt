@@ -102,7 +102,7 @@ def gradhp(x: ndarray, q=10**8):
 
 
 def hessh(x: ndarray, q=10**8):
-    if x>= 0:
+    if x >= 0:
         return (q*np.exp(-q*x))/((1+np.exp(-q*x))**2)
     else:
         (q * np.exp(q * x)) / ((1 + np.exp(q * x)) ** 2)
@@ -112,11 +112,11 @@ def hess4(x: ndarray, q=10**8):
     hess = np.zeros((len(x), len(x)))
     for i in range(len(x)):
         for j in range(len(x)):
-            if i!= j:
+            if i != j:
                 hess[i, j] = 0
             else:
-                hess[i, j] = hessh(x, q)**2 + 100 * gradhm(x[i], q)**2
-
+                hess[i, j] = hessh(x[i], q)**2 + 100 * gradhm(x[i], q)**2
+    return hess
 
 def hess5(x: ndarray, q=10**8):
     hess = np.zeros((len(x), len(x)))
@@ -206,7 +206,7 @@ def fv5(x: ndarray, q=10**8):
     s = 0
     for i in range(len(x)):
         s += fvh(x[i], q)**2 + 100 * fvh(-x[i], q)**2
-
+    return s
 
 def grad5(x: ndarray, q=10**8):
     grad = []

@@ -11,22 +11,31 @@ import math
 
 def fv1(x: ndarray, a: ndarray = np.array([1000])):
     fv = 0
-    for i in range(x.shape[0]):
-      fv += x[i]**2 * a**(i / (x.shape[0]-1))
+    if x.shape[0]>=2:
+        for i in range(x.shape[0]):
+          fv += x[i]**2 * a**(i / (x.shape[0]-1))
+    else:
+        fv = x[0] ** 2
     return fv
 
 
 def grad1(x: ndarray, a: ndarray = 1000):
         grad = []
-        for i in range(x.shape[0]):
-            grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
+        if x.shape[0] >= 2:
+            for i in range(x.shape[0]):
+                grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
+        else:
+            grad.append(2*x[0])
         return grad
 
 
 def hess1(x: ndarray, a: ndarray = np.array([1000])):
     hess = []
-    for i in range(x.shape[0]):
-        hess.append(2 * a ** (i / (x.shape[0] - 1)))
+    if x.shape[0] >= 2:
+        for i in range(x.shape[0]):
+            hess.append(2 * a ** (i / (x.shape[0] - 1)))
+    else:
+        hess = 2
     return np.diagflat(np.diag(np.full((x.shape[0], x.shape[0]), hess)))
 
 
@@ -57,16 +66,16 @@ def hess2(x: ndarray):
 
 
 
-def fv3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
+def fv3(x: ndarray, eps=10**(-16), a: ndarray = 2):
     fv = np.log(eps + fv1(x=x,a=a))
     return fv
 
-def grad3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
+def grad3(x: ndarray, eps=10**(-16), a: ndarray = 2):
     grad = grad1(x=x, a=a) / np.array([(eps + fv1(x=x,a=a))])
     return grad
 
 
-def hess3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
+def hess3(x: ndarray, eps=10**(-16), a: ndarray = 2):
     hess = (np.matrix(hess1(x=x, a=a))*(eps+fv1(x=x,a=a))
             - np.dot(np.matrix(grad1(x=x,a=a)).T,
                      np.matrix(grad1(x=x,a=a))))/(eps + fv1(x=x,a=a))**2

@@ -63,21 +63,20 @@ def fv3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
     return fv
 
 def grad3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
-    grad = grad1(x=x, a=a) / np.array([(eps + fv1(x=x,a=a))])
+    grad = grad1(x=x, a=a) / np.array([(eps + fv1(x=x, a=a))])
     return grad
 
 
 def hess3(x: ndarray, eps=10**(-16), a: ndarray = 1000):
-    hess = (np.matrix(hess1(x=x, a=a))*(eps+fv1(x=x,a=a))
-            - np.dot(np.matrix(grad1(x=x,a=a)).T,
-                     np.matrix(grad1(x=x,a=a))))/(eps + fv1(x=x,a=a))**2
+    hess = (np.matrix(hess1(x=x, a=a))*(eps+fv1(x=x, a=a))
+            - np.dot(np.matrix(grad1(x=x, a=a)).T,
+                     np.matrix(grad1(x=x, a=a))))/(eps + fv1(x=x, a=a))**2
     return hess
 
 
 def fvh(x: ndarray, q=10**8):
     fv = (np.log(1+np.exp(-np.abs(q*x))) + max(q*x, 0)) / q
     return fv
-
 
 def gradhm(x: ndarray, q=10**8):
     if x >= 0:

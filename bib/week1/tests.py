@@ -43,12 +43,4 @@ plt.title('Optimization Algorithms - Attractive-Sector 2, d=50')
 plt.ylabel('$f$')
 plt.xlabel('Iterations')
 help(result_NM)
-result_BFGS.nfev
-fv4(result_BFGS.x)
-result_NM.nfev
-fv5(result_NM.x)
-result_TNCG.maxcv
-fv5(result_TNCG.x)
 
-fv4(result_Nelder.x)
-grad3(result_Nelder.x)

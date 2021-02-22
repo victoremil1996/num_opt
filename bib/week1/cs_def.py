@@ -198,7 +198,7 @@ def grad4(x: ndarray, q=10**8):
     grad = []
     for i in range(len(x)):
         grad.append(gradhp(x[i], q) + 100 * gradhm(x[i], q))
-    return grad
+    return np.array(grad)
 
 
 def fv5(x: ndarray, q=10**8):
@@ -211,7 +211,7 @@ def grad5(x: ndarray, q=10**8):
     grad = []
     for i in range(len(x)):
         grad.append(2*fvh(x[i], q) * gradhp(x[i], q) + 200*fvh(-x[i], q) * gradhm(x[i], q))
-    return grad
+    return np.array(grad)
 
 
 def f5(x: ndarray, q=10**8, result=0):

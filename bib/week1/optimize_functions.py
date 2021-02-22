@@ -27,7 +27,7 @@ def testfunkg(x: ndarray):
 
 def backtracklsearch(x: ndarray, f, fg, pk):
     a = 1
-    rho = 0.5
+    rho = 0.8
     c = 0.001
     while f(x+a*pk) > f(x) + c * a * np.dot(fg(x), pk):
         a = rho*a
@@ -43,8 +43,11 @@ def steepest(x: ndarray, f, fg, eps = 10**(-8)):
         fval = f(newx)
         iteration += 1
         print(fval, newx, fg(newx), alpha)
+    print("fv = ", fval)
+    print("x = ", newx)
+    print("Iteration Count = ", iteration)
     return fval, newx, iteration
 
 
-xtest = np.array([2,4])
+xtest = np.array([2, 4])
 steepest(xtest, fv1, grad1, eps=0.0001)

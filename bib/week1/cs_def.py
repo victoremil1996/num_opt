@@ -26,7 +26,7 @@ def grad1(x: ndarray, a: ndarray = 1000):
                 grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
         else:
             grad.append(2*x[0])
-        return grad
+        return np.array(grad)
 
 
 def hess1(x: ndarray, a: ndarray = np.array([1000])):
@@ -63,7 +63,6 @@ def hess2(x: ndarray):
         hess = np.array([[-400 * (x[1] - x[0] ** 2) + 800 * x[0] ** 2 + 2
                              , -400 * x[0]], [-400 * x[0], 200]])
     return hess
-
 
 
 def fv3(x: ndarray, eps=10**(-16), a: ndarray = 2):

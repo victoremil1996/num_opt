@@ -8,8 +8,8 @@ import numpy as np
 from numpy import ndarray
 from bib.week1.cs_functions import f1, f2, f3, fh, f4, f5, A44
 
-xline = np.array(np.linspace(-1, 3, 55))
-yline = np.array(np.linspace(-1, 3, 55))
+xline = np.array(np.linspace(-1, 20, 55))
+yline = np.array(np.linspace(-1, 20, 55))
 zline = np.array(np.linspace(-2.5, 4, 55))
 X, Y = np.meshgrid(xline, yline)
 xy = np.array([X, Y])

@@ -22,11 +22,11 @@ def callback(x):
 x0 = np.array(random.randint(1, 10, size=2))
 x0 = np.array([0.1, 0.1])
 #x0 = np.array([1,2])
-history = [np.linalg.norm(grad5(x0))]
-history_fv = [fv5(x0)]
+history = [np.linalg.norm(grad2(xtest))]
+history_fv = [fv2(xtest)]
 fv4(x0)
 #BFGS
-result_BFGS = minimize(fv4, x0, method='BFGS', tol=10**(-8), callback=callback, jac=grad4)
+result_BFGS = minimize(fv2, xtest, method='BFGS', tol=10**(-8), callback=callback, jac=grad2)
 #Newton-CG
 result_NM = minimize(fv5, x0, method='Newton-CG', tol=10**(-15), callback=callback, jac=grad5)
 #Trust-NCG

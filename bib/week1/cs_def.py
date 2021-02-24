@@ -39,12 +39,12 @@ def hess1(x: ndarray, a: ndarray = np.array([1000])):
 
 
 def fv2(x: ndarray):
-    fv = []
+    #fv = []
     if x.shape[0] != 2:
         print("Fail, x must be two-dimensional")
     else:
         fv = (1 - x[0]) ** 2 + 100 * (x[1] - (x[0] ** 2)) ** 2
-    return fv
+    return np.array(fv)
 
 
 def grad2(x: ndarray):
@@ -53,7 +53,7 @@ def grad2(x: ndarray):
     else:
         grad = [-2 * (1 - x[0]) - 400 * x[0] * (x[1] - (x[0] ** 2))
                 , 200 * (x[1] - (x[0] ** 2))]
-    return grad
+    return np.array(grad, dtype=np.float64)
 
 
 def hess2(x: ndarray):

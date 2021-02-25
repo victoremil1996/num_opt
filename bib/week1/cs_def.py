@@ -83,7 +83,7 @@ def hess3(x: ndarray, eps=10**(-16), a: ndarray = 2):
 
 
 def fvh(x: ndarray, q=10**8):
-    fv = (np.log(1+np.exp(-np.abs(q*x))) + max(q*x, 0)) / q
+    fv = (np.log(1+np.exp(-np.abs(q*x))) + np.maximum(q*x, 0)) / q
     return fv
 
 
@@ -105,7 +105,7 @@ def hessh(x: ndarray, q=10**8):
     if x >= 0:
         return (q*np.exp(-q*x))/((1+np.exp(-q*x))**2)
     else:
-        (q * np.exp(q * x)) / ((1 + np.exp(q * x)) ** 2)
+        return (q * np.exp(q * x)) / ((1 + np.exp(q * x)) ** 2)
 
 
 def hess4(x: ndarray, q=10**8):
@@ -132,9 +132,10 @@ def hess5(x: ndarray, q=10**8):
 
 
 def fv4(x: ndarray, q=10**8):
-    s = 0
-    for i in range(len(x)):
-        s +=fvh(x[i], q) + 100 * fvh(-x[i], q)
+    #s = 0
+    #for i in range(len(x)):
+    #    s +=fvh(x[i], q) + 100 * fvh(-x[i], q)
+    s = np.sum(fvh(x, q) + 100 * fvh(-x, q))
     return s
 
 
@@ -146,9 +147,10 @@ def grad4(x: ndarray, q=10**8):
 
 
 def fv5(x: ndarray, q=10**8):
-    s = 0
-    for i in range(len(x)):
-        s += fvh(x[i], q)**2 + 100 * fvh(-x[i], q)**2
+#    s = 0
+#    for i in range(len(x)):
+#        s += fvh(x[i], q)**2 + 100 * fvh(-x[i], q)**2
+    s = np.sum(fvh(x, q)**2 + 100 * fvh(-x, q)**2)
     return s
 
 

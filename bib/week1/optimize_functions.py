@@ -106,4 +106,4 @@ def newton_method(x, f, fg, fh, eps=10**(-8)):
 
     return x_points, y_points
 
-newton_method(xtest, fv4, grad4, hess4)
+#newton_method(xtest, fv4, grad4, hess4)

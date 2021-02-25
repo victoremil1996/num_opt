@@ -25,7 +25,7 @@ def grad1(x: ndarray, a: ndarray = 1000):
                 grad.append(2 * x[i] * a ** (i / (x.shape[0] - 1)))
         else:
             grad.append(2*x[0])
-        return grad
+        return np.array(grad)
 
 
 def hess1(x: ndarray, a: ndarray = np.array([1000])):
@@ -39,12 +39,12 @@ def hess1(x: ndarray, a: ndarray = np.array([1000])):
 
 
 def fv2(x: ndarray):
-    fv = []
+    #fv = []
     if x.shape[0] != 2:
         print("Fail, x must be two-dimensional")
     else:
         fv = (1 - x[0]) ** 2 + 100 * (x[1] - (x[0] ** 2)) ** 2
-    return fv
+    return np.array(fv)
 
 
 def grad2(x: ndarray):
@@ -53,7 +53,7 @@ def grad2(x: ndarray):
     else:
         grad = [-2 * (1 - x[0]) - 400 * x[0] * (x[1] - (x[0] ** 2))
                 , 200 * (x[1] - (x[0] ** 2))]
-    return np.array(grad)
+    return np.array(grad, dtype=np.float64)
 
 
 def hess2(x: ndarray):
@@ -71,7 +71,7 @@ def fv3(x: ndarray, eps=10**(-16), a: ndarray = 2):
 
 
 def grad3(x: ndarray, eps=10**(-16), a: ndarray = 2):
-    grad = grad1(x=x, a=a) / np.array([(eps + fv1(x=x, a=a))])
+    grad = grad1(x=x, a=a) / np.array([(eps + fv1(x=x,a=a))])
     return grad
 
 

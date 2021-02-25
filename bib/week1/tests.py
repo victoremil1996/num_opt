@@ -14,27 +14,26 @@ from numpy import *
 from bib.week1.cs_def import *
 
 def callback(x):
-    fobj = np.linalg.norm(grad5(x))
+    fobj = np.linalg.norm(grad1(x))
     history.append(fobj)
-    history_fv.append(fv5(x))
+    history_fv.append(fv1(x))
 
 
-x0 = np.array(random.randint(1, 10, size=2))
-x0 = np.array([0.1, 0.1])
+x0 = np.array(random.randint(1, 10, size=5))
+x0 = np.array([400, 200])
 #x0 = np.array([1,2])
-xtest = np.array([1, 2, 3, 4, 5])
-history = [np.linalg.norm(grad1(xtest))]
-history_fv = [fv1(xtest)]
+history = [np.linalg.norm(grad1(x0))]
+history_fv = [fv1(x0)]
 fv4(x0)
 #BFGS
-result_BFGS = minimize(fv1, xtest, method='BFGS', tol=10**(-8), callback=callback, jac=grad1)
+result_BFGS = minimize(fv1, x0, method='BFGS', tol=10**(-8), callback=callback, jac=grad1)
 #Newton-CG
-result_NM = minimize(fv1, x0, method='Newton-CG', tol=10**(-15), callback=callback, jac=grad1)
+result_NM = minimize(fv5, x0, method='Newton-CG', tol=10**(-15), callback=callback, jac=grad5)
 #Trust-NCG
-result_TNCG = minimize(fv1, x0, method='trust-ncg', tol=10**(-8), callback=callback, jac=grad1,
-                       hess=hess1)
+result_TNCG = minimize(fv5, x0, method='trust-ncg', tol=10**(-8), callback=callback, jac=grad5,
+                       hess=hess5)
 #Neal
-result_Nelder = minimize(fv1, x0, method='Nelder-Mead', tol=10**(-8), callback=callback)
+result_Nelder = minimize(fv4, x0, method='Nelder-Mead', tol=10**(-8), callback=callback)
 #plt.plot((np.log(history)))
 plt.semilogy(history)
 #plt.plot(history_fv)
